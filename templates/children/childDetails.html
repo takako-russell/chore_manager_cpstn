@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card">
+    <div class="upper">
+      {% if child.child_back_image %}
+      <img src="{{ child.child_back_image }}" class="img-fluid" />
+      {% else %}
+      <img src="/static/images/default_kid_background" class="img-fluid" />
+      {% endif %}
+    </div>
+
+    <div class="user text-center">
+      <div class="profile">
+        <img src="{{child.face_image}}" class="rounded-circle" width="80" />
+      </div>
+    </div>
+
+    <div class="mt-5 text-center">
+      <h4 class="mb-0">{{child.childname}}</h4>
+      <form method="POST" action="/children/{{ child.id}}/delete">
+        <button class="btn btn-primary btn-sm profile-update-btn">
+          Delete
+        </button>
+      </form>
+      <div class="d-flex justify-content-between align-items-center mt-4 px-4">
+        <div class="stats" style="margin-left: 20px">
+          <h6 class="mb-0"># of chores done</h6>
+          <span>{{ number_done}}</span>
+        </div>
+
+        <div class="stats" style="margin-right: 20px">
+          <h6 class="mb-0">Earned so far</h6>
+          <span>${{ child.total_earnings }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

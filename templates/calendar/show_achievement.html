@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block content %}
+<div
+  class="p-5 text-center bg-image"
+  style="
+    background-image: url('/static/images/home_background-img.png');
+    background-size: 80%;
+    height: 300px;
+  "
+>
+  <div class="container">
+    <div id="content-container">
+      <div
+        class="card"
+        style="
+          background-color: rgba(0, 0, 0, 0.6);
+          margin-top: 100px;
+          height: 600px;
+        "
+      >
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="text-white">
+            {% for child in children %}
+            <h1 class="mb-3">{{ child.childname }}</h1>
+            <p style="margin-bottom: 60px">
+              Earned so far:
+              <span style="font-size: 30px">${{ child.total_earnings }}</span
+              ><span class="material-symbols-outlined" style="color: yellow">
+                celebration
+              </span>
+            </p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

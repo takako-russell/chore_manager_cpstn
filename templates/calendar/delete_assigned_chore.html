@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="content-container">
+    <div class="card show-chores-card">
+      {% if assigned_chores %}
+      <form action="/calendar/{{cell_id}}/{{child.id}}/delete" method="POST">
+        <ul class="card-ul">
+          {% for assigned_chore in assigned_chores %}
+          <li class="assigned-chore-container">
+            <input
+              type="checkbox"
+              name="checked_chores"
+              value="{{ assigned_chore.id }}"
+            />
+
+            <div
+              class="chore-details"
+              style="background-color: {{ assigned_chore.bg_color }};"
+            >
+              <span
+                >{{ assigned_chore.title }} assigned by {{parent_assigned
+                }}</span
+              >
+            </div>
+          </li>
+
+          {% endfor %}
+        </ul>
+
+        <button
+          type="submit"
+          class="delete-assigned btn btn-outline-danger"
+          onclick="return confirm('Are you sure you want to delete this chore?');"
+        >
+          Click here to delete checked chores
+        </button>
+      </form>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

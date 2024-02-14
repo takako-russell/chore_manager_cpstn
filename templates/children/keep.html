@@ -1,0 +1,89 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card">
+      <div class="upper">
+        {% if parent.parent_back_image %}
+        <img src="{{ parent.parent_back_image }}" class="img-fluid" />
+        {% else %}
+        <img src="/static/images/default_parent_background" class="img-fluid" />
+        {% endif %}
+      </div>
+  
+      <div class="user text-center">
+        <div class="profile">
+          <img src="{{parent.face_image}}" class="rounded-circle" width="80" />
+        </div>
+      </div>
+  
+      <div class="mt-5 text-center">
+        <h3>{{ parent.parentname }}</h3>
+  
+        
+        <div class="d-flex justify-content-between align-items-center mt-4 px-4">
+          <a href="/parents/{{parent.id}}/update"><button class="btn btn-primary btn-sm follow">Update</button></a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+class Assigned(db.Model):
+    """Connect a child,chores and a day"""
+    
+    __tablename__ = "assigned"
+    
+    assigned_child = db.Column(db.Integer,db.ForeignKey('children.id', cascade='all, delete-orphan'),primary_key=True)
+    
+    assigned_chore = db.Column(db.Integer,db.ForeignKey('chores.id', cascade='all, delete-orphan'),primary_key=True)
+    
+    assigned_day = db.Column(db.Integer, nullable=False,primary_key=True)  
+    
+    child = db.relationship('Child', backref='assigned_tasks')
+    
+    chore = db.relationship('Chore', backref='assigned_children')
+
+    done = [t for t in child.assigned_tasks if t.assigned_chore == chore.id][0].done
+    parent_assigned = [t for t in child.assigned_tasks if t.done == True][0].parent_assigned
+    parent = Parent.query.get(parent_assigned)
+
+
+    {% comment %} {% extends 'base.html' %} {% block content %} {% for child in children %}
+<div
+  class="p-5 text-center bg-image"
+  style="
+    background-image: url('/static/images/home_background-img.png');
+    background-size: 80%;
+    height: 300px;
+  "
+>
+  <div class="container">
+    <div id="content-container">
+      <div class="card" style="background-color: rgba(0, 0, 0, 0.6)">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="text-white">
+            <h1 class="mb-3">{{ child.childname }}</h1>
+
+            <p>Earned so far</p>
+            <div class="chore-description">
+              <span>${{ child.total_earnings }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %} {% endblock%} {% endcomment %}
+
+<form
+                action="/chores/{{ assigned_chore.id }}/delete"
+                method="post"
+              >
+                <button
+                  class="delete-chore"
+                  onclick="return confirm('Are you sure you want to delete this chore?');"
+                >
+                  <span class="material-symbols-outlined"> cancel </span>
+                </button>
+              </form>

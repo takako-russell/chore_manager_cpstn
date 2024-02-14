@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div id="content-container">
+    <form method="POST">
+      {{ form.csrf_token }}
+      <div class="form-container">
+        <div class="form-box">
+          {% for field in form if field.widget.input_type != 'hidden' %}
+          <div class="form-group">
+            <div>
+              {{ field(placeholder=field.label.text, class="form-control") }}
+            </div>
+          </div>
+          {% for error in field.errors %}
+          <span class="text-danger">{{ error }}</span>
+          {% endfor %} {% endfor %}
+        </div>
+
+        <button
+          class="btn btn-primary btn-sm btn-block"
+          style="position: asbolute; bottom: 30px"
+        >
+          Update parent
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

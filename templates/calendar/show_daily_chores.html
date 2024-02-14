@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="content-container">
+    <div class="card show-chores-card">
+      {% if assigned_chores %}
+      <form
+        action="/calendar/{{cell_id}}/{{child.id}}/mark_as_done"
+        method="POST"
+      >
+        <ul class="card-ul">
+          {% for assigned_chore in assigned_chores %}
+          <li class="assigned-chore-container">
+            <input
+              type="checkbox"
+              name="checked_chores"
+              value="{{ assigned_chore.id }}"
+            />
+
+            <div
+              class="chore-details"
+              style="background-color: {{ assigned_chore.bg_color }};"
+            >
+              <span
+                >{{ assigned_chore.title }} assigned by
+                {{parent_assigned.parentname }}</span
+              >
+            </div>
+          </li>
+
+          {% endfor %}
+        </ul>
+        <button type="submit" class="btn btn-secondary btn-sm mark-as-done-btn">
+          Click here to mark checked chores as done
+        </button>
+      </form>
+
+      {% endif %}
+
+      <div class="assign-btn-wrapper">
+        <a
+          href="{{ url_for('assign_a_chore', cell_id = cell_id, child_id=child.id) }}"
+          ><button class="btn btn-sm btn-outline-primary">
+            Assign a chore
+          </button></a
+        >
+      </div>
+
+      <div class="assign-delete-btn-wrapper">
+        <form
+          action="{{ url_for('show_delete_assigned_chores', cell_id = cell_id, child_id=child.id) }}"
+          method="POST"
+        >
+          <button type="submit" class="btn btn-sm btn-outline-primary">
+            Delete assigned chore
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

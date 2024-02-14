@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {% block content %}
+<form method="POST">
+  {{ form.csrf_token }}
+  <div class="addchore-form-container">
+    <div class="form-box">
+      {% for field in form if field.widget.input_type != 'hidden' %}
+      <div class="form-group">
+        <div>
+          {{ field(placeholder=field.label.text, class="form-control") }}
+        </div>
+      </div>
+      {% for error in field.errors %}
+      <span class="text-danger">{{ error }}</span>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    <button class="btn btn-primary btn-sm btn-block">Update chore</button>
+  </div>
+</form>
+{% endblock %}

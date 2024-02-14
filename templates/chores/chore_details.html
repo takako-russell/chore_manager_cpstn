@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+<div
+  class="p-5 text-center bg-image"
+  style="
+    background-image: url('/static/images/home_background-img.png');
+    background-size: 80%;
+    height: 300px;
+  "
+>
+  <div class="container">
+    <div id="content-container">
+      <div class="card" style="background-color: rgba(0, 0, 0, 0.6)">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="text-white">
+            <h1 class="mb-3">{{ chore.title }}</h1>
+            <div class="list-chore-items">
+              {{ chore.description}}
+              <div class="chore-description">
+                <span class="material-icons md-18">savings</span
+                ><span>${{chore.payrate}}</span>
+              </div>
+            </div>
+            <a
+              data-mdb-ripple-init
+              class="btn btn-outline-light btn-md chore-btn"
+              href="/chores/{{chore.id}}/update"
+              role="button"
+              >Update chore</a
+            >
+
+            <form
+              action="/chores/{{chore.id}}/delete"
+              method="POST"
+              style="display: inline"
+            >
+              <button
+                type="submit"
+                class="btn btn-outline-light btn-md chore-btn"
+                data-mdb-ripple-init
+              >
+                Delete chore
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div id="content-container">
+    <form method="POST">
+      {{ form.csrf_token }}
+      <div class="form-container">
+        <div class="chore-form-box">
+          {% for field in form if field.widget.input_type != 'hidden' %}
+          <div class="form-group">
+            {% if field.name == 'payrate' %} {# Check if the field is 'payrate'
+            #}
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              {{ field(class="form-control") }}
+            </div>
+            {% else %} {{ field(placeholder=field.label.text,
+            class="form-control") }} {% endif %}
+          </div>
+          {% for error in field.errors %}
+          <span class="text-danger">{{ error }}</span>
+          {% endfor %} {% endfor %}
+        </div>
+        <button class="btn btn-primary btn-sm btn-block">Add a chore</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
